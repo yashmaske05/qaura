@@ -1,0 +1,16 @@
+# Installed packages and build output (recreated by npm install / npm run package)
+node_modules/
+dist/
+
+# Browser builds copied from node_modules by scripts/vendor.js on npm install
+src/vendor/
+
+# Screenshots written by the test run
+test/screenshots/
+
+# Logs and OS files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+desktop.ini

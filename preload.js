@@ -1,0 +1,42 @@
+'use strict';
+
+const { contextBridge, ipcRenderer, webUtils } = require('electron');
+
+// The only bridge between the page and the disk. The page never gets Node access.
+contextBridge.exposeInMainWorld('api', {
+  load: () => ipcRenderer.invoke('data:load'),
+  save: (text) => ipcRenderer.invoke('data:save', text),
+  saveSync: (text) => ipcRenderer.sendSync('data:save-sync', text),
+  exportData: (text) => ipcRenderer.invoke('data:export', text),
+  importData: () => ipcRenderer.invoke('data:import'),
+  listBackups: () => ipcRenderer.invoke('backups:list'),
+  readBackup: (name) => ipcRenderer.invoke('backups:read', name),
+  snapshot: (kind) => ipcRenderer.invoke('backups:snapshot', kind),
+  info: () => ipcRenderer.invoke('app:info'),
+  openPath: (which) => ipcRenderer.invoke('app:open-path', which),
+  setTheme: (theme) => ipcRenderer.invoke('app:set-theme', theme),
+  chooseMirror: () => ipcRenderer.invoke('app:choose-mirror'),
+  clearMirror: () => ipcRenderer.invoke('app:clear-mirror'),
+  exportFile: (opts) => ipcRenderer.invoke('export:file', opts),
+  exportPdf: (opts) => ipcRenderer.invoke('export:pdf', opts),
+  exportFolder: (opts) => ipcRenderer.invoke('export:folder', opts),
+  importFiles: () => ipcRenderer.invoke('import:files'),
+  addPaths: (paths) => ipcRenderer.invoke('files:add-paths', paths),
+  addBytes: (bytes, name) => ipcRenderer.invoke('files:add-bytes', bytes, name),
+  pickFiles: () => ipcRenderer.invoke('files:pick'),
+  clipboardImage: () => ipcRenderer.invoke('files:clipboard-image'),
+  copyImage: (blob) => ipcRenderer.invoke('files:copy-image', blob),
+  readText: (blob) => ipcRenderer.invoke('files:read-text', blob),
+  saveText: (text, name) => ipcRenderer.invoke('files:save-text', text, name),
+  openInApp: (fileId, blob, name, opts) => ipcRenderer.invoke('files:open-app', fileId, blob, name, opts || {}),
+  syncWorking: () => ipcRenderer.invoke('files:sync-working'),
+  readBytes: (blob) => ipcRenderer.invoke('files:read-bytes', blob),
+  takeOpenedFiles: () => ipcRenderer.invoke('files:take-opened'),
+  onFilesOpened: (fn) => { ipcRenderer.on('files:opened', () => fn()); },
+  previewPdf: (blob, name) => ipcRenderer.invoke('files:preview-pdf', blob, name),
+  downloadFile: (blob, name) => ipcRenderer.invoke('files:download', blob, name),
+  onFileChanged: (fn) => { ipcRenderer.on('files:changed', (_e, change) => fn(change)); },
+  pathForFile: (file) => { try { return webUtils.getPathForFile(file); } catch { return ''; } },
+  copy: (text) => ipcRenderer.invoke('clipboard:write', text),
+  openExternal: (url) => ipcRenderer.invoke('shell:open-external', url),
+});
