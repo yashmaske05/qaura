@@ -192,4 +192,4 @@ docs/screenshots/    Images used in this README
 
 ## License
 
-No license has been chosen yet, so all rights are reserved by the author. Third-party libraries keep their own licenses (listed in `src/vendor/THIRD-PARTY-LICENSES.txt` after `npm install`).
+Released under the MIT License. See [LICENSE](LICENSE). Third-party libraries keep their own licenses (listed in `src/vendor/THIRD-PARTY-LICENSES.txt` after `npm install`).

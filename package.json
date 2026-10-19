@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "QAura, the QA workspace: an offline desktop notepad for QA and software testers. Daily tasks, rich-text notes, bug logs, code snippets, standup summaries and a files library with Word and Excel editing and version history.",
   "author": "Yash Maske",
+  "license": "MIT",
   "homepage": "https://github.com/yashmaske05/qaura#readme",
   "repository": {
     "type": "git",
